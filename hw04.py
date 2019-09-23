@@ -11,6 +11,7 @@ def gitRepoAPI(ID):
     repoDict = {}
 
     for repo in userRepos:
+        print(repo["name"])
         commitsAPI = "https://api.github.com/repos/" + ID +"/" + repo["name"] +"/commits"
         commits = requests.get(commitsAPI)
         commitsContent = json.loads(commits.content.decode('utf-8'))
@@ -18,7 +19,7 @@ def gitRepoAPI(ID):
         # print("User ID: " + ID + " Repo name: " + repo["name"] + " Number of Commits: " + str(len(commitsContent)))
 
         repoDict[(str(repo["name"]))] = len(commitsContent)
-
+    print(repoDict)
     return repoDict
 
 
