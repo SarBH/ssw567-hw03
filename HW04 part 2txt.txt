@@ -1,0 +1,34 @@
+Homework 04
+SSW 567
+
+
+Description of thought process when designing code:
+
+API requests on python are new to me, but I was able to make the calls and collect the repo names and number of commits. At first I thought I should be able to extract the number of commits from the repo itself just like we do with the repo name:
+repo["name"] 
+but that didn't work for commits, since there's no field on that json file that captures the number of commits. Rather, all commits are listed, so I had to read that json file and take the "length" of it (namely the number of individual commits listed).
+
+I also considered the warning that was given to us in the homework description, that if we made too many github API requests it may lock me out. My current code makes one request to obtain the repos for a given githubID, and one request per repo for that user.
+
+I understand that if there's a user with thousands of repositories this may cause github to lock me out, but I couldn't find a way to make a single request to obtain all the commits for all repos for a given githubID.
+
+___
+
+Testing: at the beginning I just wanted my program to work, I wasn't thinking too much on how I would test it other than observing a print statement. Once I got the API requests to work, and I got the print message I was looking for, I thought of how I can make this easier to test.
+One idea was to create a list with: 
+User ID: SarBH Repo name: ssw567-hw01 Number of Commits: 4
+User ID: SarBH Repo name: ssw567-hw04 Number of Commits: 7
+User ID: SarBH Repo name: triangle-hw02 Number of Commits: 8
+User ID: SarBH Repo name: university Number of Commits: 7
+etc.
+
+But to test this, the test case would need to match the format I chose EXACTLY so I could assert equal. That was not ideal, and it is also less efficient.
+
+Instead, I put everything in a dictionary like this: repoDict[repoName] = numCommits
+
+Example:
+repoDict = {'ssw567-hw01': 4, 'ssw567-hw04': 7, 'triangle-hw02': 8, 'university': 7} 
+
+This is easier to test. I create a dictionary of the correct real repo names and commit numbers, then I compare that to the dictionary created by my method using assertDictEqual which give specific information on the differences between dicts, if any, rather than just a boolean value. I could also compare values on specific entries (number of commits for a specific repo name), or ensure that all repos are accounted for by using the dictionary.keys() method.
+
+
